@@ -1,5 +1,5 @@
 package com.esiea.pootd2.controllers;
 
-public class IExplorerController {
-    
+public interface IExplorerController {
+    String executeCommand(String commandStr);
 }

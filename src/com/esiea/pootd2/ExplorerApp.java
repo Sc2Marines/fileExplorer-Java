@@ -17,5 +17,7 @@ public class ExplorerApp {
         folder1.addSubInodes(file1);
         folder2.addSubInodes(file2);
         folder2.addSubInodes(file3);
+
+        root.displaySubInodes("");
     }
 }

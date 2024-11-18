@@ -7,7 +7,7 @@ abstract class Inode {
 
     //properties
     protected List<Inode> subInodes;
-    private Inode parentInode;
+    private FolderInode parentInode;
     private int size;
     private String name;
 
@@ -29,7 +29,7 @@ abstract class Inode {
         return this.size;
     }
 
-    public Inode getParent()
+    public FolderInode getParent()
     {
         return parentInode;
     }
@@ -45,12 +45,8 @@ abstract class Inode {
         this.size = size;
     }
 
-    public void setParentInode(Inode inode)
+    public void setParentInode(FolderInode parentFolder)
     {
-        this.parentInode = inode;
+        this.parentInode = parentFolder;
     }
-
-
-
-    // others
 }

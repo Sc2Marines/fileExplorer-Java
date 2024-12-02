@@ -3,13 +3,14 @@ package com.esiea.pootd2.models;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class Inode {
+public abstract class Inode {
 
     //properties
-    protected List<Inode> subInodes;
+    public List<Inode> subInodes;
     private FolderInode parentInode;
     private int size;
     private String name;
+    
 
     //constructor
     protected Inode(String name)

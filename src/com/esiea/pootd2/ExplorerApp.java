@@ -1,5 +1,7 @@
 package com.esiea.pootd2;
 
+import com.esiea.pootd2.controllers.ExplorerController;
+import com.esiea.pootd2.interfaces.TextInterface;
 import com.esiea.pootd2.models.FileInode;
 import com.esiea.pootd2.models.FolderInode;
 
@@ -19,5 +21,8 @@ public class ExplorerApp {
         folder2.addSubInodes(file3);
 
         root.displaySubInodes("");
+        ExplorerController controller = new ExplorerController();
+        TextInterface textInterface = new TextInterface(controller);
+        textInterface.run();
     }
 }

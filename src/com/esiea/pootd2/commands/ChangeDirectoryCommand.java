@@ -14,6 +14,7 @@ public class ChangeDirectoryCommand extends Command {
 
     @Override
     public String execute() {
+        //TODO: refactor this code to handle recursive (cf other methods)
         if ("..".equals(targetFolder)) {
             if (currentFolder.getParent() != null) {
                 newFolder = currentFolder.getParent();

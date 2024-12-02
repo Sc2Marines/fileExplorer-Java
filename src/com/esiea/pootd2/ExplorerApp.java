@@ -20,6 +20,7 @@ public class ExplorerApp {
         folder2.addSubInodes(file2);
         folder2.addSubInodes(file3);
 
+        root.displaySubInodes("");
         ExplorerController controller = new ExplorerController();
         TextInterface textInterface = new TextInterface(controller);
         textInterface.run();

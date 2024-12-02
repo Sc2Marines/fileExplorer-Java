@@ -29,6 +29,16 @@ public class FolderInode extends Inode{
         }
     }
 
+    public FolderInode getSubFolder(String name)
+    {
+        Inode matchingInode = this.getSubInode(name);
+        if (matchingInode instanceof FolderInode)
+        {
+            return (FolderInode)matchingInode;
+        }
+        return null;
+    }
+
     public void displaySubInodes(String prefix) {
         System.out.println(prefix + "|_ " + this.getName() + " " + this.getSize());
         for (Inode inode : this.subInodes) {

@@ -1,5 +1,9 @@
 package com.esiea.pootd2.commands;
 
+import java.util.Arrays;
+import java.util.List;
+
+import com.esiea.pootd2.models.FileInode;
 import com.esiea.pootd2.models.FolderInode;
 
 public class MakeDirectoryCommand extends Command {
@@ -13,8 +17,47 @@ public class MakeDirectoryCommand extends Command {
 
     @Override
     public String execute() {
-        FolderInode newFolder = new FolderInode(folderName);
-        currentFolder.addSubInodes(newFolder);
-        return "Dossier créé: " + folderName;
+        return this.createFolder().execute();
+    }
+
+    private Command createFolder()
+    {
+        List<String> parsedFolderName = Arrays.asList(folderName.trim().split("/"));
+        FolderInode travelFolder = currentFolder;
+        FolderInode newFolder = new FolderInode(parsedFolderName.get(parsedFolderName.size()-1));
+        ErrorCommand successCommand = new ErrorCommand("Dossier créé: " + folderName);
+        if (parsedFolderName.get(0).equals("."))
+        {
+            return this.createSub(parsedFolderName, travelFolder, newFolder, successCommand);
+        }
+        else if (!parsedFolderName.get(0).equals("")) 
+        {
+            currentFolder.addSubInodes(newFolder);
+            return successCommand;
+        }
+        else 
+        {
+            FolderInode travelInode = currentFolder.getParent();
+            while (!travelInode.getName().equals("/")) {
+                travelInode = travelInode.getParent(); 
+            }
+            return this.createSub(parsedFolderName, travelInode, newFolder, successCommand);
+        }
+    }
+
+    private Command createSub(List<String> parsedFolderName, FolderInode travelFolder, FolderInode newFolder, Command successCommand)
+    {
+        FolderInode subFolder;
+        for (int i = 1; i < parsedFolderName.size() - 1; i ++)
+            {
+                subFolder = travelFolder.getSubFolder(parsedFolderName.get(i));
+                if (subFolder == null)
+                {
+                    return new ErrorCommand("path invalid");
+                }
+                travelFolder = subFolder;
+            }
+            travelFolder.addSubInodes(newFolder);
+            return successCommand;
     }
 }

@@ -50,4 +50,22 @@ public abstract class Inode {
     {
         this.parentInode = parentFolder;
     }
+
+    public Inode getSubInode(String name)
+    {
+        if (name.equals(".."))
+        {
+            return this.getParent();
+        }
+        else 
+        {
+            for (Inode inode : subInodes) {
+                if (inode.getName().equals(name))
+                {
+                    return inode;
+                }
+            }
+            return null;
+        }
+    }
 }

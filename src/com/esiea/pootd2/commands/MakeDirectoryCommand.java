@@ -25,7 +25,7 @@ public class MakeDirectoryCommand extends Command {
         List<String> parsedFolderName = Arrays.asList(folderName.trim().split("/"));
         FolderInode travelFolder = currentFolder;
         FolderInode newFolder = new FolderInode(parsedFolderName.get(parsedFolderName.size()-1));
-        ErrorCommand successCommand = new ErrorCommand("Dossier créé: " + folderName);
+        SuccessCommand successCommand = new SuccessCommand("Dossier créé: " + folderName);
         if (parsedFolderName.get(0).equals("."))
         {
             return this.createSub(parsedFolderName, travelFolder, newFolder, successCommand);
@@ -37,7 +37,8 @@ public class MakeDirectoryCommand extends Command {
         }
         else 
         {
-            FolderInode travelInode = currentFolder.getParent();
+            FolderInode travelInode = currentFolder;
+             
             while (!travelInode.getName().equals("/")) {
                 travelInode = travelInode.getParent(); 
             }

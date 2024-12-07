@@ -3,7 +3,6 @@ package com.esiea.pootd2.commands.parsers;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -23,6 +22,7 @@ public class UnixCommandParser implements ICommandParser {
         commandMap.put("ls", () -> new ListCommand(curFolder, arg1));
         commandMap.put("mkdir", () -> new MakeDirectoryCommand(curFolder, arg1));
         commandMap.put("touch", () -> new TouchCommand(curFolder, arg1));
+        commandMap.put("tree", () -> new TreeCommand(curFolder, arg1));
     }
 
     public Command parse(String userCommand, FolderInode folderInode)

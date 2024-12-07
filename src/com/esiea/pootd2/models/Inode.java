@@ -5,21 +5,18 @@ import java.util.List;
 
 public abstract class Inode {
 
-    //properties
     public List<Inode> subInodes;
     private FolderInode parentInode;
     private int size;
     private String name;
     
 
-    //constructor
     protected Inode(String name)
     {
         this.name = name;
         this.subInodes = new ArrayList<>();
     }
 
-    //getters
     public String getName()
     {
         return this.name;
@@ -35,7 +32,6 @@ public abstract class Inode {
         return parentInode;
     }
 
-    //setters 
     public void setName(String name)
     {
         this.name = name;

@@ -39,14 +39,22 @@ public class FolderInode extends Inode{
         return null;
     }
 
-    public void displaySubInodes(String prefix) {
-        System.out.println(prefix + "|_ " + this.getName() + " " + this.getSize());
+    public String displaySubInodes(String prefix, boolean isFirstCall) {
+        StringBuilder result = new StringBuilder();
+    
+        if (!isFirstCall) {
+            result.append(prefix + "|_ ");
+        }
+    
+        result.append(this.getName() + " " + this.getSize() + "\n");
+    
         for (Inode inode : this.subInodes) {
             if (inode instanceof FolderInode) {
-                ((FolderInode) inode).displaySubInodes(prefix + "    ");
+                result.append(((FolderInode) inode).displaySubInodes(prefix + "  ", false));
             } else {
-                System.out.println(prefix + "    |_ " + inode.getName() + " " + inode.getSize());
+                result.append(prefix + "  |_ " + inode.getName() + " " + inode.getSize() + "\n");
             }
         }
+        return result.toString();
     }
 }

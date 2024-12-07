@@ -9,7 +9,6 @@ public class FileInode extends Inode {
     public FileInode(String name)
     {
         super(name);
-        //gen a random num from 1 to 100 000
         Random rd = new Random();
         int size = rd.nextInt(100000) + 1;
         super.setSize(size);

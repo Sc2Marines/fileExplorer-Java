@@ -31,17 +31,21 @@ public class ChangeDirectoryCommand extends Command {
         }
         else
         {
-            if (parsedFolderName.get(0).equals(""))
-            {
-                travelFolder = currentFolder.getParent();
+            if (parsedFolderName.isEmpty() || parsedFolderName.get(0).equals("")){
                 while (!travelFolder.getName().equals("/")) {
                     travelFolder = travelFolder.getParent(); 
                 }
             }
-            Command  cmd= this.listSub(parsedFolderName, travelFolder);
-            String ret = cmd.execute();
-            newFolder = ((ChangeDirectoryCommand)cmd).getNewFolder();
-            return ret;
+            if (parsedFolderName.isEmpty()){
+                newFolder = travelFolder;
+                return "Folder changed";
+            }
+            else {
+                Command cmd = this.listSub(parsedFolderName, travelFolder);
+                String ret = cmd.execute();
+                newFolder = ((ChangeDirectoryCommand)cmd).getNewFolder();
+                return ret;
+            }
         }
     }
 

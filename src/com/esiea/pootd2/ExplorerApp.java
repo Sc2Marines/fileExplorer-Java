@@ -4,6 +4,7 @@ import com.esiea.pootd2.controllers.ExplorerController;
 import com.esiea.pootd2.interfaces.TextInterface;
 import com.esiea.pootd2.models.FileInode;
 import com.esiea.pootd2.models.FolderInode;
+import com.esiea.pootd2.commands.ChangeDirectoryCommand;
 import com.esiea.pootd2.commands.Command;
 import com.esiea.pootd2.commands.parsers.*;
 public class ExplorerApp {
@@ -48,7 +49,14 @@ public class ExplorerApp {
         cmd = parser.parse("touch /POO/TD2/tmp/tmp2/../tmp3/test4.c", folder2);
         System.out.println(cmd.execute());
 
-
+        cmd = parser.parse("cd ./tmp/tmp2/../", folder2);
+        System.out.println(cmd.execute());
+        if (cmd instanceof ChangeDirectoryCommand)
+        {
+            FolderInode newFolder = ((ChangeDirectoryCommand)cmd).getNewFolder();
+            System.out.println(newFolder.getName());
+        }
+        
         root.displaySubInodes("");
 
 

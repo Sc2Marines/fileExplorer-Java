@@ -34,6 +34,7 @@ public class UnixCommandParser implements ICommandParser {
             arg1 = parsedCommand.get(1);
         }
         return this.mapCommand();
+
     }
 
 

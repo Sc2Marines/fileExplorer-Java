@@ -6,10 +6,17 @@ import java.util.Scanner;
 public class TextInterface implements IUserInterface {
     private final IExplorerController controller;
 
+    /**
+     * Constructor for TextInterface
+     * @param controller The controller to use for the interface
+     */
     public TextInterface(IExplorerController controller) {
         this.controller = controller;
     }
 
+    /**
+     * Run the interface
+     */
     @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);

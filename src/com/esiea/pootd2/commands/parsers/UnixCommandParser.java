@@ -18,6 +18,9 @@ public class UnixCommandParser implements ICommandParser {
     private List<String> parsedCommand;
     private String arg1 = "";
 
+    /**
+     * The constructor of the parser, initialise a map of all commands available
+     */
     public UnixCommandParser() {
         commandMap.put("cd", () -> new ChangeDirectoryCommand(curFolder, arg1));
         commandMap.put("ls", () -> new ListCommand(curFolder, arg1));
@@ -31,6 +34,10 @@ public class UnixCommandParser implements ICommandParser {
         commandMap.put("pwd", () -> new PwdCommand(curFolder));
     }
 
+    /**
+     * Get all the command mapped
+     * @return The list of command as a List of String
+     */
     public List<String> getListCommands()
     {
         List<String> commands = new ArrayList<>();
@@ -41,6 +48,12 @@ public class UnixCommandParser implements ICommandParser {
         return commands;
     }
 
+    /**
+     * Parse an user command
+     * @param userCommand The user command
+     * @param folderInode The current user folder location
+     * @return The mapped method wich conrrespond to the user command
+     */
     public Command parse(String userCommand, FolderInode folderInode)
     {
         this.curFolder = folderInode;
@@ -53,12 +66,20 @@ public class UnixCommandParser implements ICommandParser {
 
     }
 
-
+    /**
+     * Split userCommand in multiple arguments
+     * @param userCommand The user Command
+     * @return The splitted list as an List of String
+     */
     private List<String> splitArguments(String userCommand)
     {
         return Arrays.asList(userCommand.trim().split(" "));
     }
 
+    /**
+     * Get a command from the parsed command
+     * @return The corresponding command or an ErrorCommand
+     */
     private Command mapCommand() {
         if (parsedCommand == null || parsedCommand.isEmpty()) {
             return new ErrorCommand("no commands provided");

@@ -6,10 +6,18 @@ public class PwdCommand extends Command {
 
     FolderInode currentFolder;
 
+    /**
+     * Constructor for the pwdCommand
+     * @param currentFolder The current user folder
+     */
     public PwdCommand(FolderInode currentFolder) {
         this.currentFolder = currentFolder;
     }
 
+    /**
+     * execute the pwd command
+     * Travel back to the root folder and building the path to the current folder
+     */
     @Override
     public String execute(){
         StringBuilder result = new StringBuilder();

@@ -11,16 +11,28 @@ public class ChangeDirectoryCommand extends Command {
     private FolderInode newFolder;
     private static final String successMessage = "Folder changed";
 
+    /**
+     * Constructor for ChangeDirectoryCommand
+     * @param currentFolder The current user folder
+     * @param targetFolder The destination folder path 
+     */
     public ChangeDirectoryCommand(FolderInode currentFolder, String targetFolder) {
         this.currentFolder = currentFolder;
         this.targetFolder = targetFolder;
     }
 
+    /**
+     * Execute the command
+     */
     @Override
     public String execute() {
         return this.changeFolder();
     }
 
+    /**
+     * Change the folder to the destination folder
+     * @return The result of the operation
+     */
     private String changeFolder(){
         List<String> parsedFolderName = Arrays.asList(targetFolder.trim().split("/"));
         FolderInode travelFolder = currentFolder;
@@ -57,6 +69,12 @@ public class ChangeDirectoryCommand extends Command {
         }
     }
 
+    /**
+     * Set the travelFolder (this folder is the parent folder of the folder to go)
+     * @param parsedFolderName The parsed folder name
+     * @param travelFolder  The folder to travel through the file explorer
+     * @return ChangeDirectoryCommand or ErrorCommand
+     */
     private Command listSub(List<String> parsedFolderName, FolderInode travelFolder)
     {
         FolderInode subFolder = travelFolder;
@@ -71,6 +89,10 @@ public class ChangeDirectoryCommand extends Command {
         return new ChangeDirectoryCommand(subFolder, ".");
     }
 
+    /**
+     * Get the new folder
+     * @return the new folder or the current folder if not set
+     */
     public FolderInode getNewFolder() {
         return newFolder != null ? newFolder : currentFolder;
     }

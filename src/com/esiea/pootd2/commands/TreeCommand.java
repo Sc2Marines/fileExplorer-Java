@@ -8,6 +8,11 @@ public class TreeCommand extends Command {
     private final FolderInode currentFolder;
     private String folderName;
 
+    /**
+     * Constructor for the treeCommand
+     * @param currentFolder The current user folder
+     * @param folderName The path where the command must be launched 
+     */
     public TreeCommand(FolderInode currentFolder, String folderName) {
         this.currentFolder = currentFolder;
         if (folderName == null) {
@@ -17,11 +22,19 @@ public class TreeCommand extends Command {
         }
     }
 
+    /**
+     * Execute the command
+     * @return The result as a string
+     */
     @Override
     public String execute() {
         return treeFolder();
     }
 
+    /**
+     * Launch the tree command at the specified path
+     * @return The result as a String
+     */
     private String treeFolder()
     {
         List<String> parsedFolderName = Arrays.asList(folderName.trim().split("/"));
@@ -46,6 +59,12 @@ public class TreeCommand extends Command {
         }
     }
 
+    /**
+     * Travel through the file explorer to launch the tree command
+     * @param parsedFolderName The parsed path
+     * @param travelFolder The travel folder wich is used to travel through the file explorer
+     * @return An Error command or a sucessCommand
+     */
     private Command treeSub(List<String> parsedFolderName, FolderInode travelFolder)
     {
         FolderInode subFolder = travelFolder;

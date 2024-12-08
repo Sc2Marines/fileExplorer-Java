@@ -8,11 +8,19 @@ public class AddBashRCCommand extends Command{
     private FolderInode currentFolder;
     private String cmd;
 
+    /**
+     * Constructor for AddbashRCCommand
+     * @param currentFolder The current folder of the user
+     * @param cmd The user command
+     */
     public AddBashRCCommand(FolderInode currentFolder, String cmd){
         this.currentFolder = currentFolder;
         this.cmd = cmd;
     }
 
+    /**
+     * Store in the bashrc file the user command
+     */
     @Override
     public String execute() {
         FolderInode travelFolder = currentFolder;

@@ -10,6 +10,11 @@ public class CatCommand extends Command {
     private String fileName;
     private static  String fileNotFoundError = "File not Found";
 
+    /**
+     * Constructor for the CatCommand, define the filename
+     * @param currentFolder The current user folder
+     * @param fileName The filename to cat
+     */
     public CatCommand(FolderInode currentFolder, String fileName) {
         this.currentFolder = currentFolder;
         if (fileName == null) {
@@ -19,11 +24,18 @@ public class CatCommand extends Command {
         }
     }
 
+    /**
+     * Execute the cat command
+     */
     @Override
     public String execute() {
         return cat();
     }
 
+    /**
+     * Get the file content by traveling through the folders 
+     * @return The file content or ErrorCommands
+     */
     private String cat()
     {
         List<String> parsedFolderName = Arrays.asList(fileName.trim().split("/"));
@@ -60,6 +72,12 @@ public class CatCommand extends Command {
         }
     }
 
+    /**
+     * Set the travelFolder (this folder is th eparent folder of the file to cat)
+     * @param parsedFolderName The parsed folder name
+     * @param travelFolder  The folder to travel through the file explorer
+     * @return CatCommand or ErrorCommand
+     */
     private Command listSub(List<String> parsedFolderName, FolderInode travelFolder)
     {
         FolderInode subFolder = travelFolder;

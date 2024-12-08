@@ -1,4 +1,4 @@
-**Réalisé par GAUTIER Gabriel et FOL Alexandre
+**Réalisé par GAUTIER Gabriel et FOL Alexandre**
 
 
 # Explorateur de Fichiers Java (TD2)

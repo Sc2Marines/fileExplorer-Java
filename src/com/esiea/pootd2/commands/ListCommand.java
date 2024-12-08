@@ -35,7 +35,7 @@ public class ListCommand extends Command {
      */
     private String listFolder(){
         List<String> parsedFolderName = Arrays.asList(folderName.trim().split("/"));
-        FolderInode travelFolder = currentFolder;
+        FolderInode travelFolder;
         if (!parsedFolderName.isEmpty() && parsedFolderName.get(0).equals(".") && parsedFolderName.size() < 3) {
             StringBuilder result = new StringBuilder();
             for (var inode : currentFolder.getSubInodes()) {
@@ -45,11 +45,15 @@ public class ListCommand extends Command {
         }
         else if (!parsedFolderName.isEmpty() && parsedFolderName.size() < 3) {
             StringBuilder result = new StringBuilder();
-            if (parsedFolderName.size() == 1){
-                travelFolder = travelFolder.getSubFolder(parsedFolderName.get(0));
+            if (parsedFolderName.size() == 1 && !parsedFolderName.get(0).equals("")){
+                travelFolder = currentFolder.getSubFolder(parsedFolderName.get(0));
+            }
+            else if (parsedFolderName.size() == 1 && parsedFolderName.get(0).equals(""))
+            {
+                travelFolder = currentFolder;
             }
             else {
-                travelFolder = travelFolder.getSubFolder(parsedFolderName.get(1));
+                travelFolder = currentFolder.getSubFolder(parsedFolderName.get(1));
             }
             
             if (travelFolder != null){
@@ -63,6 +67,7 @@ public class ListCommand extends Command {
             }
         }
         else{
+            travelFolder = currentFolder;
             if (folderName.equals("/")){
                 while (!travelFolder.getName().equals("/")) {
                     travelFolder = travelFolder.getParent(); 

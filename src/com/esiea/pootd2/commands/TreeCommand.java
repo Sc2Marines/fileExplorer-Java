@@ -54,7 +54,7 @@ public class TreeCommand extends Command {
             subFolder = travelFolder.getSubFolder(parsedFolderName.get(i));
             if (subFolder == null)
             {
-                return new ErrorCommand("path invalid");
+                return new ErrorCommand("Path invalid");
             }
             travelFolder = subFolder;
         }

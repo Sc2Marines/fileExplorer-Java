@@ -82,9 +82,7 @@ public class HttpInterface extends AbstractInterface implements HttpHandler {
     }
 
     private void handlePostExecute(HttpExchange exchange) throws IOException {
-        
-        //to uncomment
-        //assert controller != null;
+        assert this.controller != null;
         
         InputStream inStream = exchange.getRequestBody();
         OutputStream outStream = exchange.getResponseBody();
@@ -97,9 +95,9 @@ public class HttpInterface extends AbstractInterface implements HttpHandler {
             response = "Server closed";
             serverShouldClose = true;
         } 
-        //to uncomment
-        //else
-        //     response = controller.executeCommand(command);
+        else {
+            response = controller.executeCommand(command);
+        }
 
         exchange.sendResponseHeaders(200, response.length());
         outStream.write(response.getBytes());

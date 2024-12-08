@@ -3,7 +3,6 @@ package com.esiea.pootd2.commands;
 import java.util.Arrays;
 import java.util.List;
 
-import com.esiea.pootd2.models.FileInode;
 import com.esiea.pootd2.models.FolderInode;
 
 public class MakeDirectoryCommand extends Command {
@@ -25,7 +24,7 @@ public class MakeDirectoryCommand extends Command {
         List<String> parsedFolderName = Arrays.asList(folderName.trim().split("/"));
         FolderInode travelFolder = currentFolder;
         FolderInode newFolder = new FolderInode(parsedFolderName.get(parsedFolderName.size()-1));
-        SuccessCommand successCommand = new SuccessCommand("Dossier créé: " + folderName);
+        SuccessCommand successCommand = new SuccessCommand("Folder created: " + folderName);
         if (parsedFolderName.get(0).equals("."))
         {
             return this.createSub(parsedFolderName, travelFolder, newFolder, successCommand);
@@ -54,7 +53,7 @@ public class MakeDirectoryCommand extends Command {
                 subFolder = travelFolder.getSubFolder(parsedFolderName.get(i));
                 if (subFolder == null)
                 {
-                    return new ErrorCommand("path invalid");
+                    return new ErrorCommand("Path invalid");
                 }
                 travelFolder = subFolder;
             }

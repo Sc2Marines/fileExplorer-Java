@@ -7,13 +7,13 @@ import com.esiea.pootd2.commands.parsers.UnixCommandParser;
 
 public class ExplorerController implements IExplorerController {
     private FolderInode currentFolder;
+   
 
     public ExplorerController() {
         this.currentFolder = new FolderInode("/");
     }
 
-    public void initialiseBaseArchitecture()
-    {
+    public void initialiseBaseArchitecture() {
         FolderInode folder1 = new FolderInode("POO");
         FolderInode folder2 = new FolderInode("TD2");
         currentFolder.addSubInodes(folder1);
@@ -21,6 +21,8 @@ public class ExplorerController implements IExplorerController {
         FileInode file1 = new FileInode("TD1.pdf");
         FileInode file2 = new FileInode("Main.java");
         FileInode file3 = new FileInode("Main.class");
+        FileInode bashrc = new FileInode(".bashrc");
+        currentFolder.addSubInodes(bashrc);
         folder1.addSubInodes(file1);
         folder2.addSubInodes(file2);
         folder2.addSubInodes(file3);
@@ -29,7 +31,9 @@ public class ExplorerController implements IExplorerController {
     @Override
     public String executeCommand(String commandStr) {
         Command command = new UnixCommandParser().parse(commandStr, currentFolder);
-        
+        AddBashRCCommand saveBashRCCommand = new AddBashRCCommand(currentFolder, commandStr);
+        this.doCommand(saveBashRCCommand);
+
         if (command instanceof ChangeDirectoryCommand){
             return this.doCommand((ChangeDirectoryCommand)command);
         }
@@ -51,6 +55,24 @@ public class ExplorerController implements IExplorerController {
         else if (command instanceof TreeCommand){
             return this.doCommand((TreeCommand)command);
         }
+        else if (command instanceof ClearCommand) {
+            return this.doCommand((ClearCommand)command);
+        }
+        else if (command instanceof CommandsListCommand) {
+            return this.doCommand((CommandsListCommand)command);
+        }
+        else if (command instanceof CatCommand) {
+            return this.doCommand((CatCommand)command);
+        }
+        else if (command instanceof NanoCommand) {
+            return this.doCommand((NanoCommand)command);
+        }
+        else if (command instanceof AddBashRCCommand) {
+            return this.doCommand((AddBashRCCommand)command);
+        }
+        else if (command instanceof PwdCommand) {
+            return this.doCommand((PwdCommand)command);
+        }
         else {
             return this.doCommand(command);
         }
@@ -63,11 +85,11 @@ public class ExplorerController implements IExplorerController {
     private String doCommand(ChangeDirectoryCommand cmd){
         String res = cmd.execute();
         if (cmd instanceof ChangeDirectoryCommand){
-            this.currentFolder = ((ChangeDirectoryCommand)cmd).getNewFolder();
+            this.currentFolder = (cmd).getNewFolder();
         }
         return res;
     }
-    
+
     private String doCommand(SuccessCommand cmd){
         return cmd.execute();
     }
@@ -89,6 +111,30 @@ public class ExplorerController implements IExplorerController {
     }
 
     private String doCommand(TreeCommand cmd) {
+        return cmd.execute();
+    }
+
+    private String doCommand(ClearCommand cmd) {
+        return cmd.execute();
+    }
+
+    private String doCommand(CommandsListCommand cmd) {
+        return cmd.execute();
+    }
+
+    private String doCommand(CatCommand cmd) {
+        return cmd.execute();
+    }
+
+    private String doCommand(NanoCommand cmd) {
+        return cmd.execute();
+    }
+
+    private String doCommand(AddBashRCCommand cmd) {
+        return cmd.execute();
+    }
+
+    private String doCommand(PwdCommand cmd) {
         return cmd.execute();
     }
 }

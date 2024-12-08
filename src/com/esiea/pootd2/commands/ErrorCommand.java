@@ -9,6 +9,6 @@ public class ErrorCommand extends Command {
 
     @Override
     public String execute() {
-        return "Erreur: " + errorMessage;
+        return "Error: " + errorMessage;
     }
 }

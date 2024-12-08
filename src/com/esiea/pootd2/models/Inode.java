@@ -5,59 +5,96 @@ import java.util.List;
 
 public abstract class Inode {
 
-    public List<Inode> subInodes;
+    private List<Inode> subInodes;
     private FolderInode parentInode;
     private int size;
     private String name;
     
-
-    protected Inode(String name)
-    {
+    /**
+     * Constructor of the Inode
+     * @param name The name of the inode
+     */
+    protected Inode(String name){
         this.name = name;
         this.subInodes = new ArrayList<>();
     }
 
-    public String getName()
-    {
+    /**
+     * Get the name
+     * @return The name as a string
+     */
+    public String getName(){
         return this.name;
     }
 
-    public int getSize()
-    {
+    /**
+     * Get the size
+     * @return The size as an int
+     */
+    public int getSize(){
         return this.size;
     }
 
-    public FolderInode getParent()
-    {
+    /**
+     * Get the parent folder of this inode
+     * @return The parent folder as a FolderInode
+     */
+    public FolderInode getParent(){
         return parentInode;
     }
 
-    public void setName(String name)
-    {
+    /**
+     * Set the name
+     * @param name The name
+     */
+    public void setName(String name){
         this.name = name;
     }
 
-    public void setSize(int size)
-    {
+    /**
+     * Set the size
+     * @param size The size
+     */
+    public void setSize(int size){
         this.size = size;
     }
 
-    public void setParentInode(FolderInode parentFolder)
-    {
+    /**
+     * Get the list of all subInodes
+     * @return The list of subInodes
+     */
+    public List<Inode> getSubInodes(){
+        return this.subInodes;
+    }
+
+    /**
+     * Add a subInode
+     * @param inode The inode to add
+     */
+    public void addSubInode(Inode inode) {
+        this.subInodes.add(inode);
+    }
+
+    /**
+     * Set this inode's parent folder
+     * @param parentFolder The parent folder
+     */
+    public void setParentInode(FolderInode parentFolder){
         this.parentInode = parentFolder;
     }
 
-    public Inode getSubInode(String name)
-    {
-        if (name.equals(".."))
-        {
+    /**
+     * Get a specific inode (parent or child) by his name
+     * @param name The name of the Inode to fetch
+     * @return The fetched inode or null if not found
+     */
+    public Inode getSubInode(String name){
+        if (name.equals("..")){
             return this.getParent();
         }
-        else 
-        {
+        else {
             for (Inode inode : subInodes) {
-                if (inode.getName().equals(name))
-                {
+                if (inode.getName().equals(name)){
                     return inode;
                 }
             }

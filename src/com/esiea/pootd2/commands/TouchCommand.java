@@ -25,7 +25,7 @@ public class TouchCommand extends Command {
         List<String> parsedFilename = Arrays.asList(fileName.trim().split("/"));
         FolderInode travelFolder = currentFolder;
         FileInode newFile = new FileInode(parsedFilename.get(parsedFilename.size()-1));
-        SuccessCommand successCommand = new SuccessCommand("Fichier créé: " + fileName);
+        SuccessCommand successCommand = new SuccessCommand("File created: " + fileName);
         if (parsedFilename.get(0).equals("."))
         {
             return this.createSub(parsedFilename, travelFolder, newFile, successCommand);
@@ -53,7 +53,7 @@ public class TouchCommand extends Command {
                 subFolder = travelFolder.getSubFolder(parsedFilename.get(i));
                 if (subFolder == null)
                 {
-                    return new ErrorCommand("path invalid");
+                    return new ErrorCommand("Path invalid");
                 }
                 travelFolder = subFolder;
             }

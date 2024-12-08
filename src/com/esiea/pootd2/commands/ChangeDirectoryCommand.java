@@ -9,6 +9,7 @@ public class ChangeDirectoryCommand extends Command {
     private final FolderInode currentFolder;
     private final String targetFolder;
     private FolderInode newFolder;
+    private static final String successMessage = "Folder changed";
 
     public ChangeDirectoryCommand(FolderInode currentFolder, String targetFolder) {
         this.currentFolder = currentFolder;
@@ -20,17 +21,24 @@ public class ChangeDirectoryCommand extends Command {
         return this.changeFolder();
     }
 
-    private String changeFolder()
-    {
+    private String changeFolder(){
         List<String> parsedFolderName = Arrays.asList(targetFolder.trim().split("/"));
         FolderInode travelFolder = currentFolder;
-        if (!parsedFolderName.isEmpty() && parsedFolderName.get(0).equals(".") && parsedFolderName.size() < 2)
-        {
+        if (!parsedFolderName.isEmpty() && parsedFolderName.get(0).equals(".") && parsedFolderName.size() < 2){
             newFolder = travelFolder;
-            return "Folder changed";
+            return new SuccessCommand(successMessage).execute();
         }
-        else
-        {
+        else if (!parsedFolderName.isEmpty() && parsedFolderName.size() < 2){
+            FolderInode tmpFolder = currentFolder.getSubFolder(parsedFolderName.get(0)); 
+            if (tmpFolder != null){
+                newFolder = tmpFolder;
+                return new SuccessCommand(successMessage).execute();
+            }
+            else {
+                return new ErrorCommand("Folder not Found").execute();
+            }
+        }
+        else{
             if (parsedFolderName.isEmpty() || parsedFolderName.get(0).equals("")){
                 while (!travelFolder.getName().equals("/")) {
                     travelFolder = travelFolder.getParent(); 
@@ -38,7 +46,7 @@ public class ChangeDirectoryCommand extends Command {
             }
             if (parsedFolderName.isEmpty()){
                 newFolder = travelFolder;
-                return "Folder changed";
+                return new SuccessCommand(successMessage).execute();
             }
             else {
                 Command cmd = this.listSub(parsedFolderName, travelFolder);
@@ -55,9 +63,8 @@ public class ChangeDirectoryCommand extends Command {
         for (int i = 1; i < parsedFolderName.size(); i ++)
         {
             subFolder = travelFolder.getSubFolder(parsedFolderName.get(i));
-            if (subFolder == null)
-            {
-                return new ErrorCommand("path invalid");
+            if (subFolder == null){
+                return new ErrorCommand("Path invalid");
             }
             travelFolder = subFolder;
         }
